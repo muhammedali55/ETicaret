@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Server=DESKTOP-TS5245I;Database=DBETICARET;Trusted_Connection=True;" Microsoft.EntityFrameWorkCore.SqlServer -OutputDir Entities

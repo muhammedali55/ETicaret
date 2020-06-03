@@ -1,0 +1,206 @@
+﻿@model ModelAdminUrunHome
+@{
+    ViewData["Title"] = "UrunIslemleri";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+    ViewBag.myId=0;
+}
+
+<h1>Ürün Tanımlama İşlemleri</h1>
+
+
+
+<div class="row p-3 align-items-center">
+
+    <div class="col-md-8">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">ÜRÜN EKLEME FORMU</h3>
+            </div>
+            <form asp-area="Administrator" asp-controller="Urun" asp-action="Kaydet"
+                    enctype="multipart/form-data"
+                  method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <input name="ad" type="text" class="form-control" id="txtad" placeholder="ürün adı">
+                    </div>
+                    <div class="form-group">
+                        <input name="aciklama" type="text" class="form-control" id="txtaciklama" placeholder="ürün açıklaması">
+                    </div>
+                    <div class="form-group">
+                        <input name="fiyat" type="text" class="form-control" id="txtfiyat" placeholder="ürün fiyatı">
+                    </div>
+                    <div class="form-group">
+                        <input name="indirimli_fiyat" type="text" class="form-control" id="txtindirimlifiyat" placeholder="indirimli fiyat">
+                    </div>
+                    <div class="form-group">
+                        <input name="stokmiktari" type="text" class="form-control" id="txtstokmiktari" placeholder="stok miktarı">
+                    </div>
+                    <div class="form-group">
+                        <input name="kdv" type="text" class="form-control" id="txtkdv" placeholder="ürün kdv">
+                    </div>
+                    <div class="form-group">
+                        <select name="kategoriler" class="select2bs4"bb data-placeholder="Kategoriler"
+                                style="width: 100%;">
+                            @foreach (var item in Model.KategoriListesi.Where(x => x.ParentId == 0))
+                            {
+                                <optgroup label="@item.Ad">
+                                    @foreach (var subitem in Model.KategoriListesi.Where(x => x.ParentId == item.Id))
+                                    {
+                                        <option value="@subitem.Id">@subitem.Ad</option>
+                                    }
+                                </optgroup>
+
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select id="selectmodel" onchange="degisimoldu();" name="marka" placeholder="Marka" class="form-control select2" style="width: 100%;">
+                            <option value="0">Seçiniz...</option>
+                            @foreach (var item in Model.Markalistesi)
+                            {
+                                <option value="@item.Id">@item.Ad</option>
+                            }
+                        </select>
+                    </div>
+                    <script>
+                        function degisimoldu() {
+                            var e = document.getElementById("selectmodel");
+                            var id = e.options[e.selectedIndex].value;
+                            (@ViewBag.myId) = id;
+                        }
+                    </script>
+                    <div class="form-group">
+                        <select name="model" placeholder="Model" class="form-control select2" style="width: 100%;">
+                            <option value="0">Seçiniz...</option>
+                            @foreach (var item in Model.ModelListesi.Where(x => x.Id == ViewBag.myId))
+                            {
+                                <option>@item.Ad</option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <input onchange="readBackUrl(this)" hidden id="btnBackFile" type="file" name="UrunResim" value="Dosya Seç" />
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col p-3 text-center">
+                <h3>ÜRÜN RESMİ SEÇİMİ</h3>
+                <div class="text-center">
+                    <img id="imgBack" width="480px" height="400px" src="~/assets/img/hero/h1_hero.jpg"
+                         alt="Seçmek için tıklayınız" onclick="resimBack()" />
+                </div>
+             </div>         
+
+        </div>
+
+        <script>
+
+            function readBackUrl(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#imgBack").attr("src", e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+            function resimBack() {
+                document.getElementById("btnBackFile").click();
+            }
+               </script>
+
+    </div>
+
+
+</div>
+
+
+
+
+<div class="row p-3 align-items-center">
+
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">ÜRÜN LİSTESİ TABLOSU</h3>
+            </div>
+
+            <div class="p-3">
+
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Ad</th>
+                            <th>Kategori</th>
+                            <th>Marka</th>
+                            <th>Model</th>
+                            <th>İşlemler</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UrunListesi)
+                        {
+
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Ad</td>
+                            <td>
+
+                                @foreach (var Kitem in Model.KategoriUrunList.Where(x=> x.UrunId==item.Id))
+                                {
+                                    
+                                        @Model.KategoriListesi.Where(x=> x.Id==Kitem.Id).FirstOrDefault().Ad 
+                                    
+                                }
+
+
+                            </td>
+                            <td>Marka</td>
+                            <td>Model</td>
+                            <td>
+                                <a href="#" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-folder"></i>
+                                    Göster
+                                </a>
+                                <a onclick="duzenleId(@item.Id)"
+                                   data-toggle="modal" data-target="#modal-duzenle"
+                                   class="btn btn-info btn-sm">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    Düzenle
+                                </a>
+
+                                <a onclick="silId(@item.Id)" data-toggle="modal" data-target="#modal-danger" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                    Sil
+                                </a>
+
+                            </td>
+                        </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

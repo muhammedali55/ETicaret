@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Personel Tanımlama</h1>
+
+<div class="row p-3 align-items-center">
+
+    <div class="col-md-8">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">PERSONEL EKLEME FORMU</h3>
+            </div>
+            <form asp-area="Administrator" asp-controller="PersonelTanimlama" asp-action="Index"
+                  method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Email address</label>
+                        <input name="Eposta" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+
+                    </div>
+                    <div class="form-group">
+                        <label>Kullanıcı Adı</label>
+                        <input name="Kullaniciadi" type="text" class="form-control" placeholder="Kullanıcı Adı">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input name="Sifre" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Re-Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+                    </div>
+                </div>
+                <div>
+                    @if (ViewBag.hatalar != null)
+                    {
+                        @foreach (var item in (IEnumerable<IdentityError>)ViewBag.hatalar)
+                        {
+                            <label style="color:orangered">Hata...:  @item.Description</label><br />
+                        }
+                    }
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>

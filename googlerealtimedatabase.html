@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button type="submit" onclick="writeUserData(12,'Muhammet','muhammed@gmail.com','https://www.google.com')">
+        Yazıyı gönder
+    </button>
+
+
+    <script>
+        var config = {
+    apiKey: "AIzaSyBqJ08xHNdP6PB-LQGyP6-qABOUiQKq-Is",
+    authDomain: "mondepost.firebaseapp.com",
+    databaseURL: "https://mondepost.firebaseio.com/",
+    storageBucket: "localhost"
+  };
+  firebase.initializeApp(config);
+
+  // Get a reference to the database service
+  var database = firebase.database();
+
+  function writeUserData(userId, name, email, imageUrl) {
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    email: email,
+    profile_picture : imageUrl
+  });
+}
+
+    </script>
+
+
+
+<script defer src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/7.14.4/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
+
+<script defer src="https://www.gstatic.com/firebasejs/7.14.4/init-firebase.js"></script>
+</body>
+</html>

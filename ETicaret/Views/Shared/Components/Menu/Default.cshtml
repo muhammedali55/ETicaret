@@ -1,0 +1,39 @@
+﻿@using ETicaret.Models;
+@model ModelMenu
+    
+    <!-- Main-menu -->
+<div class="main-menu f-right d-none d-lg-block">
+    <nav>
+        <ul id="navigation">
+            <li><a href="~/">AnaSayfa</a></li>
+            <li class="hot">
+                <a href="#">Kategoriler</a>
+                <ul class="submenu">
+
+                    @foreach (var item in Model.listKategori.OrderBy(x=> x.Ad).Where(x => x.ParentId == 0))
+                    {
+                        <li>
+                            <a href="~/Home/Kategoriler/@item.Id">
+                                @item.Ad
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <a href="Blog">Blog</a>
+
+            </li>
+            <li>
+                <a href="#">Hakkımızda</a>
+                <ul class="submenu">
+                    <li><a href="Kurumsal">Kurumsal</a></li>
+                    <li><a href="Calisanlarimiz">Çalışanlarımız</a></li>
+                    <li><a href="Firmalar">Firmalar</a></li>
+
+                </ul>
+            </li>
+            <li><a href="Iletisim">İletişim</a></li>
+        </ul>
+    </nav>
+</div>

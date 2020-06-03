@@ -1,0 +1,107 @@
+﻿@model ModelAdminHomeDesign
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ANA SAYFA TASARIM AKTİVASYON</h1>
+
+<div class="row p-3">
+
+
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">YENİ TASARIM EKLEME</h3>
+            </div>
+            <form asp-area="Administrator" asp-controller="HomeDesign" asp-action="Kaydet"
+                  method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Alan Adı</label>
+                        <input name="Ad" type="text" class="form-control" id="exampleInputEmail1" placeholder="Ad Yazınız">
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <input name="Aciklama" type="text" class="form-control" placeholder="Açıklama giriniz.">
+                    </div>
+                    <div class="form-group">
+                        <label>Aktif / Pasif</label>
+                        <input name="Durum" type="checkbox" class="form-control" id="exampleInputPassword1"
+                               title="Aktif - Pasif">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="row p-3">
+
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">ANASAYFA DİZAYN LİSTESİ </h3>
+            </div>
+
+            <div class="p-3">
+
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Ad</th>
+                            <th>Açıklama</th>
+                            <th>Aktif - Pasif</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListetblsiteHomedesigns)
+                        {
+
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Ad</td>
+                                <td>@item.Aciklama</td>
+                                <td>
+                                    <a href="#" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-folder"></i>
+                                        Göster
+                                    </a>
+                                    <a onclick="duzenleId(@item.Id)"
+                                       data-toggle="modal" data-target="#modal-duzenle"
+                                       class="btn btn-info btn-sm">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        @if ((bool)item.Durum)
+                                        {
+                                            <p>Pasif Et</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Aktif Et</p>
+                                        }
+
+                                    </a>
+
+
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
