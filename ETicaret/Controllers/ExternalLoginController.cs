@@ -45,12 +45,14 @@ namespace ETicaret.Controllers
             ExternalLoginInfo loginInfo = await _signInManager.GetExternalLoginInfoAsync();
             //Kullanıcıyla ilgili Facebook'tan gelen tüm bilgileri taşıyan nesnedir.
             //Bu nesnesnin 'LoginProvider' propertysinin değerine göz atarsanız eğer Facebook yazdığını göreceksiniz.
-            //Eğer ki, Login işlemi Google yahut Twitter üzerinde gerçekleştirilmiş olsaydı provider olarak ilgili platformun adı yazacaktı.
+            //Eğer ki, Login işlemi Google yahut Twitter üzerinde gerçekleştirilmiş olsaydı provider olarak ilgili 
+            //platformun adı yazacaktı.
             if (loginInfo == null)
                 return RedirectToAction("Login");
             else
             {
-                Microsoft.AspNetCore.Identity.SignInResult loginResult = await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, true);
+                Microsoft.AspNetCore.Identity.SignInResult loginResult = 
+                    await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, true);
                 //Giriş yapıyoruz.
                 if (loginResult.Succeeded)
                     return Redirect(ReturnUrl);

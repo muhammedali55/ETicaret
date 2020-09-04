@@ -23,7 +23,10 @@ namespace ETicaret.Authentication
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer
-                    ("Data Source=eticaretcore.database.windows.net;Initial Catalog=DBIdentityUser;User ID=muhammedali55;Password=Ankara06*;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                    ("Data Source=DESKTOP-G3OBBSA;Initial Catalog=DBIdentityUser;" +
+                    "User ID=muhammedali55;Password=Ankara06*;" +
+                    "Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;" +
+                    "ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
         }
     }
